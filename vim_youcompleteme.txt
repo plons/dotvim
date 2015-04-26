@@ -1,0 +1,108 @@
+installing
+    se-adon:/home/xp/src/llvm/build/release/key-latest-llvm_0.1-1_amd64.deb
+
+YouCompleteMe
+=============
+
+https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64-super-quick-installation
+    git submodule update --init --recursive
+    # --system-libclang  : Use the clang lib we created ourselfs!
+    ./install.sh --clang-completer --system-libclang
+
+https://github.com/Valloric/YouCompleteMe#user-guide
+    => add .ycm_extra_conf.py!!!
+    view YcmDiags for more information about compile errors
+    YcmDebugInfo
+        => check logs in /tmp/ycm_temp
+
+
+vim version
+===========
+required: Vim 7.3.584 with python2 support
+wheezy: 7.3.547
+
+https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source
+http://vim.wikia.com/wiki/Building_Vim
+git repository for vim: 
+  https://github.com/b4winckler/vim/wiki
+  http://stackoverflow.com/questions/5133641/mercurial-error-failed-to-import-extension-hggit-no-module-named-hggit
+
+To update the git repo with the latest changes from the hg repo:
+  Make a bare git repo vim-bare.git 
+  clone the hg repo
+  add the hggit extension (.hg/hgrc -> "git =")
+  change the push url (.hg/hgrc -> "default-push = /path/to/vim-bare.git)
+  hg push -v (this might take a while)
+
+
+https://packages.debian.org/wheezy-backports/vim-nox => version 7.4.488
+http://backports.debian.org/Instructions/
+sudo aptitude install -t wheezy-backports vim-nox
+
+clang version
+=============
+required: libclang-dev version 3.2+
+
+wheezy: 3.0
+
+clang-3.5 beschikbaar via http://llvm.org/apt/
+key-latest-llvm beschikbaar op rndser-repo
+        
+=> build libclang ourselfs...
+shit...
+http://clang.llvm.org/get_started.html
+    after cloning all repositories
+    => configure
+    =>  configure: WARNING: --enable-bindings=ocaml specified, but ctypes is not installed
+        configure: WARNING: --enable-bindings=ocaml specified, but OUnit 2 is not installed. Tests will not run
+    trying configure --disable-bindings --enable-optimized --enable-jit --enable-pthreads
+    
+https://wiki.debian.org/CheckInstall
+    bug: checkinstall cannot create directory
+    https://bugs.launchpad.net/ubuntu/+source/checkinstall/+bug/307799
+=> sudo checkinstall --fstrans=no
+    !! change name !!
+    !! add version (otherwise building a debian package will fail) !!
+    
+
+change colors
+====================
+http://www.quora.com/Vim/How-do-I-change-color-of-the-preview-window-in-You-Complete-Me-for-Vi
+http://www.colorschemer.com/online.html
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#ffffff guibg=#0000ff
+
+encountered problems
+====================
+RuntimeError: Error importing ycm_core. Are you sure you have placed a version 3.2+ libclang.[so|dll|dylib] in folder "/home/peter/.vim/bundle/vim-youcompleteme/third_party/ycmd"? See the Installation Guid
+https://github.com/Valloric/YouCompleteMe/issues/6
+
+
+=> ycm server still crashes!
+in terminal: python => help('modules')
+    => [ws-plodewyckx:02701] [[INVALID],INVALID] ORTE_ERROR_LOG: A system-required executable either could not be found or was not executable by this user in file ../../../../../../orte/mca/ess/singleton/ess_singleton_module.c at line 357
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=691635
+=> sudo aptitude install openmpi-bin
+
+
+=> ycmd still crashes!
+peter@ws-plodewyckx:~/.vim/bundle/vim-youcompleteme/third_party/ycmd/ycmd$ ./__main__.py 
+RuntimeError: Error importing ycm_core. Are you sure you have placed a version 3.2+ libclang.[so|dll|dylib] in folder "/home/peter/.vim/bundle/vim-youcompleteme/third_party/ycmd"? See the Installation Guide in the docs. Full error: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.14' not found (required by /home/peter/.vim/bundle/vim-youcompleteme/third_party/ycmd/ycmd/../libclang.so)
+=> https://github.com/Valloric/YouCompleteMe/issues/264
+
+=> try with wheezy clang
+    sudo aptitude install libclang-dev
+    cd /third_party/ycmd && ./build.sh --clang-completer --system-libclang
+    peter@ws-plodewyckx:~/.vim/bundle/vim-youcompleteme/third_party/ycmd/ycmd$ ./__main__.py 
+    RuntimeError: Error importing ycm_core. Are you sure you have placed a version 3.2+ libclang.[so|dll|dylib] in folder "/home/peter/.vim/bundle/vim-youcompleteme/third_party/ycmd"? See the Installation Guide in the docs. Full error: /home/peter/.vim/bundle/vim-youcompleteme/third_party/ycmd/ycmd/../ycm_core.so: undefined symbol: clang_CompileCommands_dispose
+    =>https://github.com/Valloric/YouCompleteMe/issues/1
+        => not the right version of libclang! (must be at least 3.2)
+
+
+
+
+
+
+
+
+
+
