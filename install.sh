@@ -52,6 +52,7 @@ updateOrInstall $update vim-nerdtree           https://github.com/scrooloose/ner
 updateOrInstall $update vim-ctrlp              https://github.com/kien/ctrlp.vim.git
 updateOrInstall $update vim-mru                https://github.com/yegappan/mru.git
 
+updateOrInstall $update vim-airline            https://github.com/bling/vim-airline.git
 updateOrInstall $update vim-nerdcommenter      https://github.com/scrooloose/nerdcommenter.git
 updateOrInstall $update vim-surround           https://github.com/tpope/vim-surround.git
 updateOrInstall $update vim-fugitive           https://github.com/tpope/vim-fugitive.git
@@ -60,8 +61,9 @@ updateOrInstall $update vim-youcompleteme      https://github.com/Valloric/YouCo
 updateOrInstall $update vim-tagbar             https://github.com/majutsushi/tagbar.git
 updateOrInstall $update vim-easymotion         https://github.com/Lokaltog/vim-easymotion.git
 updateOrInstall $update vim-json               https://github.com/elzr/vim-json.git
-#updateOrInstall $update vim-taglist       https://github.com/vim-scripts/taglist.vim.git
-#updateOrInstall $update vim-taglist       http://sourceforge.net/projects/vim-taglist/files/latest/download?source=files 
+updateOrInstall $update vim-colors-solarized   https://github.com/altercation/vim-colors-solarized.git
+#updateOrInstall $update vim-taglist            https://github.com/vim-scripts/taglist.vim.git
+#updateOrInstall $update vim-taglist            http://sourceforge.net/projects/vim-taglist/files/latest/download?source=files 
 
 downloadAndInstallZip vim-fswitch http://www.vim.org/scripts/download_script.php?src_id=14047 
 
@@ -75,12 +77,16 @@ verifySymlink $VIM_ROOT/bundle/vim-pathogen/autoload/pathogen.vim $VIM_ROOT/auto
 # For more info: https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64-super-quick-installation
 ################################################################################
 youcompleteme_root=$VIM_ROOT/bundle/vim-youcompleteme
-if [ ! -f $youcomleteme_root/third_party/ycmd/build.py ]; then
+if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
    echo "Installing youcompleteme"
    pushd $youcompleteme_root>/dev/null
    trap "{popd>/dev/null; exit 255; }" SIGINT
+
    git submodule update --init --recursive
    ./install.sh --clang-completer --system-libclang
+
+   popd >/dev/null
+   trap - SIGINT
 fi
 
 echo "Thank you, come again!"

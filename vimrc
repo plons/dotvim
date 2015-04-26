@@ -34,22 +34,24 @@ if has("autocmd")
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
-" show filename
+" vim-airline
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%F
+"set statusline+=%F
 set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+nmap <C-b> :bn<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " color scheme
+" More info at https://github.com/altercation/vim-colors-solarized
+" ==> REQUIRES https://github.com/Anthony25/gnome-terminal-colors-solarized
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"if ! has("gui_running")
-"   set t_Co=256
-"endif
-
-"set background=light
-"colors peaksea
-colors vylight
+if ! has("gui_running")
+   set t_Co=256
+endif
+"set background=dark
+set background=light
+colorscheme solarized
 
 
 """""""""""""""""""""""""""""""""""""""
