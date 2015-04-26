@@ -27,7 +27,6 @@ shift $((OPTIND-1))
 # Determine important directories
 ################################################################################
 DOTVIM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo $DOTVIM_DIR; exit 0;
 USER=$(whoami)
 HOME_DIR=/home/$USER
 VIM_ROOT=$HOME_DIR/.vim
@@ -40,6 +39,8 @@ source helper-functions.sh
 assertDirectoryPresent $HOME_DIR
 assertDirectoryPresent $DOTVIM_DIR/vimrc.d
 assertFilePresent $DOTVIM_DIR/vimrc
+createDirectoryIfNecessary $VIM_ROOT
+createDirectoryIfNecessary $VIM_ROOT/autoload
 
 ################################################################################
 # Download plugins
@@ -68,3 +69,18 @@ verifySymlink $DOTVIM_DIR/vimrc          $HOME_DIR/.vimrc
 verifySymlink $DOTVIM_DIR/vimrc.d/colors $VIM_ROOT/colors
 verifySymlink $DOTVIM_DIR/vimrc.d/indent $VIM_ROOT/indent
 verifySymlink $VIM_ROOT/bundle/vim-pathogen/autoload/pathogen.vim $VIM_ROOT/autoload/pathogen.vim
+
+################################################################################
+# Install vim-youcompleteme if possible
+# For more info: https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64-super-quick-installation
+################################################################################
+youcompleteme_root=$VIM_ROOT/bundle/vim-youcompleteme
+if [ ! -f $youcomleteme_root/third_party/ycmd/build.py ]; then
+   echo "Installing youcompleteme"
+   pushd $youcompleteme_root>/dev/null
+   trap "{popd>/dev/null; exit 255; }" SIGINT
+   git submodule update --init --recursive
+   ./install.sh --clang-completer --system-libclang
+fi
+
+echo "Thank you, come again!"

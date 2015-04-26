@@ -1,9 +1,17 @@
 #!/bin/bash
 
+function print_title()
+{
+   if [ $# != 1 ]; then echo "print_title: expected 1 arguments, received $#!"; exit 1; fi
+   echo "################################################################################"
+   echo "$1"
+   echo "################################################################################"
+}
+
 function assertFilePresent()
 {
    if [ $# != 1 ]; then echo "assertFilePresent: expected 1 arguments, received $#!"; exit 1; fi
-   file=$1
+   local file=$1
    if [ ! -f $file ]; then echo "Unable to find $file!"; exit 1; fi
 }
 
@@ -14,12 +22,18 @@ function assertDirectoryPresent()
    if [ ! -d $directory ]; then echo "Unable to find $directory!"; exit 1; fi
 }
 
+function createDirectoryIfNecessary()
+{
+   if [ $# != 1 ]; then echo "createDirectoryIfNecessary: expected 1 arguments, received $#!"; exit 1; fi
+   directory=$1
+   if [ ! -d $directory ]; then mkdir $directory; fi
+}
 
 function verifySymlink()
 {
    if [ $# != 2 ]; then echo "verifySymlink: expected 2 arguments, received $#!"; exit 1; fi
-   linkedFile=$1
-   linkName=$2
+   local linkedFile=$1
+   local linkName=$2
    if [ ! -e $linkedFile ]; then echo "WARNING: verifySymlink: specified target doesn't exist ($linkedFile)!" >&2; fi
    if [ ! -h  $linkName -o ! "$(readlink $linkName)" = "$linkedFile" ]; then
       rm -f $linkName
@@ -47,6 +61,7 @@ function updateOrInstall()
 {
    if [ $# -lt 3 ]; then echo "updateOrInstall: expected 3 arguments, received $#!"; exit 1; fi
    if [ -z "$VIM_ROOT" ]; then echo "updateOrInstall: expected VIM_ROOT to be specified!"; exit 1; fi
+   if [ ! -d "$VIM_ROOT" ]; then echo "updateOrInstall: $VIM_ROOT is not a directory!"; exit 1; fi
    local update=$1
    local pluginName=$2
    local pluginUrl=$3
@@ -83,5 +98,25 @@ function updateOrInstall()
       fi
       popd > /dev/null
    fi
+}
+
+function install_latest_cmake()
+{
+   local cmake_to_install=cmake-3.2.2
+   local temp_dir=`mktemp -d`
+
+   print_title "Installing $cmake_to_install"
+   pushd $temp_dir >/dev/null
+   trap 'popd >/dev/null' SIGINT
+
+   wget http://www.cmake.org/files/v3.2/${cmake_to_install}.tar.gz
+   tar xzf ${cmake_to_install}.tar.gz
+   cd $cmake_to_install 
+   ./bootstrap
+   make
+   sudo make install
+
+   popd >/dev/null
+   trap - SIGINT
 }
 
