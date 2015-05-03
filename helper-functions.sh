@@ -100,6 +100,11 @@ function updateOrInstall()
    fi
 }
 
+function version_gt() {
+   latest_version="$(echo "$@" | tr " " "\n" | sort -V | tail -n 1)"
+   test "$(echo "$@" | tr " " "\n" | sort -V | tail -n 1)" == "$1"; 
+}
+
 function install_latest_cmake()
 {
    local cmake_to_install=cmake-3.2.2

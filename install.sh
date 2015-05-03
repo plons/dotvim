@@ -29,6 +29,7 @@ shift $((OPTIND-1))
 hash wget 2>/dev/null  || {sudo aptitude install wget}
 hash curl 2>/dev/null  || {sudo aptitude install curl}
 hash unzip 2>/dev/null || {sudo aptitude install unzip}
+hash cmake 2>/dev/null || {sudo aptitude install cmake}
 
 #https://github.com/seebi/dircolors-solarized
 #gconftool-2 --set "/apps/gnome-terminal/profiles/Default/palette" --type string "#070736364242:#D3D301010202:#858599990000:#B5B589890000:#26268B8BD2D2:#D3D336368282:#2A2AA1A19898:#EEEEE8E8D5D5:#00002B2B3636:#CBCB4B4B1616:#58586E6E7575:#65657B7B8383:#838394949696:#6C6C7171C4C4:#9393A1A1A1A1:#FDFDF6F6E3E3"
@@ -61,6 +62,7 @@ updateOrInstall $update vim-pathogen           https://github.com/tpope/vim-path
 updateOrInstall $update vim-nerdtree           https://github.com/scrooloose/nerdtree.git
 updateOrInstall $update vim-ctrlp              https://github.com/kien/ctrlp.vim.git
 updateOrInstall $update vim-mru                https://github.com/yegappan/mru.git
+updateOrInstall $update vim-unite              https://github.com/Shougo/unite.vim.git
 
 updateOrInstall $update vim-airline            https://github.com/bling/vim-airline.git
 updateOrInstall $update vim-nerdcommenter      https://github.com/scrooloose/nerdcommenter.git
@@ -93,6 +95,15 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
    echo "Installing youcompleteme"
    pushd $youcompleteme_root>/dev/null
    trap "{popd>/dev/null; exit 255; }" SIGINT
+
+   export PATH="/usr/local/bin:$PATH"
+   installed_cmake=$(cmake --version |sed -r 's/^[^0-9]*(.*)[^0-9]*$/\1/')
+   required_cmake=$(grep -IR cmake_minimum_required |sed -r 's/.*VERSION (.*)\).*/\1/g' |tr -d ' ' |sort --version-sort |tail -n 1)
+   if version_gt $required_cmake $installed_cmake; then
+      echo "Required version of cmake $required_cmake is greater then installed version $installed_cmake"
+      echo "Installing latest cmake version..."
+      install_latest_cmake
+   fi
 
    git submodule update --init --recursive
    ./install.sh --clang-completer --system-libclang
