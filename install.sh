@@ -81,6 +81,10 @@ updateOrInstall $update vim-colors-solarized   https://github.com/altercation/vi
 
 downloadAndInstallZip vim-fswitch http://www.vim.org/scripts/download_script.php?src_id=14047 
 
+
+################################################################################
+# Create symlinks
+################################################################################
 verifySymlink $DOTVIM_DIR/vimrc          $HOME_DIR/.vimrc
 verifySymlink $DOTVIM_DIR/vimrc.d/colors $VIM_ROOT/colors
 verifySymlink $DOTVIM_DIR/vimrc.d/indent $VIM_ROOT/indent
@@ -96,6 +100,7 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
    pushd $youcompleteme_root>/dev/null
    trap "{popd>/dev/null; exit 255; }" SIGINT
 
+   # Verify whether clang is installed to determine if and how ycm will be installed
    continue_install=
    install_parameters=
    if ! hash clang 2>/dev/null; then
@@ -116,6 +121,7 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
    if [ -n "$continue_install" ]; then
       git submodule update --init --recursive
 
+      # Verify the installed version of cmake required to build the ycm deamon.
       export PATH="/usr/local/bin:$PATH"
       installed_cmake=$(cmake --version |sed -r 's/^[^0-9]*(.*)[^0-9]*$/\1/')
       required_cmake=$(grep -IR cmake_minimum_required |sed -r 's/.*VERSION (.*)\).*/\1/g' |tr -d ' ' |sort --version-sort |tail -n 1)
