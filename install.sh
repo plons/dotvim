@@ -24,6 +24,16 @@ done
 shift $((OPTIND-1))
 
 ################################################################################
+# Check installation of required tools
+################################################################################
+hash wget 2>/dev/null  || {sudo aptitude install wget}
+hash curl 2>/dev/null  || {sudo aptitude install curl}
+hash unzip 2>/dev/null || {sudo aptitude install unzip}
+
+#https://github.com/seebi/dircolors-solarized
+#gconftool-2 --set "/apps/gnome-terminal/profiles/Default/palette" --type string "#070736364242:#D3D301010202:#858599990000:#B5B589890000:#26268B8BD2D2:#D3D336368282:#2A2AA1A19898:#EEEEE8E8D5D5:#00002B2B3636:#CBCB4B4B1616:#58586E6E7575:#65657B7B8383:#838394949696:#6C6C7171C4C4:#9393A1A1A1A1:#FDFDF6F6E3E3"
+
+################################################################################
 # Determine important directories
 ################################################################################
 DOTVIM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -64,6 +74,8 @@ updateOrInstall $update vim-json               https://github.com/elzr/vim-json.
 updateOrInstall $update vim-colors-solarized   https://github.com/altercation/vim-colors-solarized.git
 #updateOrInstall $update vim-taglist            https://github.com/vim-scripts/taglist.vim.git
 #updateOrInstall $update vim-taglist            http://sourceforge.net/projects/vim-taglist/files/latest/download?source=files 
+#yankring uses <C-p> which collides with vim-ctrlp: needs to be fixed before we add yankring
+#updateOrInstall $update vim-yankring           https://github.com/vim-scripts/YankRing.vim.git
 
 downloadAndInstallZip vim-fswitch http://www.vim.org/scripts/download_script.php?src_id=14047 
 
