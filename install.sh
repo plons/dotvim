@@ -96,17 +96,37 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
    pushd $youcompleteme_root>/dev/null
    trap "{popd>/dev/null; exit 255; }" SIGINT
 
-   export PATH="/usr/local/bin:$PATH"
-   installed_cmake=$(cmake --version |sed -r 's/^[^0-9]*(.*)[^0-9]*$/\1/')
-   required_cmake=$(grep -IR cmake_minimum_required |sed -r 's/.*VERSION (.*)\).*/\1/g' |tr -d ' ' |sort --version-sort |tail -n 1)
-   if version_gt $required_cmake $installed_cmake; then
-      echo "Required version of cmake $required_cmake is greater then installed version $installed_cmake"
-      echo "Installing latest cmake version..."
-      install_latest_cmake
+   continue_install=
+   install_parameters=
+   if ! hash clang 2>/dev/null; then
+      echo -n "clang is not currently installed. Do you want to install youcompleteme without c++ support? [y/N] "
+      read answer
+      if [[ "$answer" == "y" ]]; then
+         continue_install=1
+         install_parameters=""
+      else
+         echo "Please install clang and run the install script again."
+         continue_install=
+      fi
+   else
+      continue_install=1
+      install_parameters="--clang-completer --system-libclang"
    fi
 
-   git submodule update --init --recursive
-   ./install.sh --clang-completer --system-libclang
+   if [ -n "$continue_install" ]; then
+      git submodule update --init --recursive
+
+      export PATH="/usr/local/bin:$PATH"
+      installed_cmake=$(cmake --version |sed -r 's/^[^0-9]*(.*)[^0-9]*$/\1/')
+      required_cmake=$(grep -IR cmake_minimum_required |sed -r 's/.*VERSION (.*)\).*/\1/g' |tr -d ' ' |sort --version-sort |tail -n 1)
+      if version_gt $required_cmake $installed_cmake; then
+         echo "Required version of cmake $required_cmake is greater then installed version $installed_cmake"
+         echo "Installing latest cmake version..."
+         install_latest_cmake
+      fi
+
+      ./install.sh $install_parameters
+   fi
 
    popd >/dev/null
    trap - SIGINT
