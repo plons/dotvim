@@ -284,3 +284,10 @@ endfunction
 " Cleanup whitespace at the end of a line
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Unite
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:unite_source_history_yank_enable = 1
+nnoremap <C-h> :Unite history/yank<cr>
