@@ -71,6 +71,8 @@ updateOrInstall $update vim-tagbar             https://github.com/majutsushi/tag
 updateOrInstall $update vim-easymotion         https://github.com/Lokaltog/vim-easymotion.git
 updateOrInstall $update vim-json               https://github.com/elzr/vim-json.git
 updateOrInstall $update vim-colors-solarized   https://github.com/altercation/vim-colors-solarized.git
+updateOrInstall $update vim-proc               https://github.com/Shougo/vimproc.vim.git
+updateOrInstall $update vim-ag                 https://github.com/rking/ag.vim.git
 #updateOrInstall $update vim-taglist            https://github.com/vim-scripts/taglist.vim.git
 #updateOrInstall $update vim-taglist            http://sourceforge.net/projects/vim-taglist/files/latest/download?source=files 
 #yankring uses <C-p> which collides with vim-ctrlp: needs to be fixed before we add yankring
@@ -102,6 +104,21 @@ if [ ! -f $HOME_DIR/.config/terminator/config ]; then
    mkdir -p $HOME_DIR/.config/terminator/
    cp terminator-solarized/config $HOME_DIR/.config/terminator/
    
+   popd >/dev/null
+   trap - SIGINT
+fi
+
+################################################################################
+# Install vim-proc
+################################################################################
+vimproc_root=$VIM_ROOT/bundle/vim-proc
+if [ ! -f $vimproc_root/autoload/vimproc_linux64.so ]; then
+   echo "Installing vimproc"
+   pushd $vimproc_root>/dev/null
+   trap "{popd>/dev/null; exit 255; }" SIGINT
+
+   make
+
    popd >/dev/null
    trap - SIGINT
 fi
@@ -152,6 +169,28 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
 
    popd >/dev/null
    trap - SIGINT
+fi
+
+#https://github.com/monochromegane/the_platinum_searcher
+#https://github.com/ggreer/the_silver_searcher
+# platinum searcher requires golang!
+if ! hash ag; then
+   echo -n "Do you want to install the silver searcher? [y/N] "
+   read answer
+   if [[ "$answer" == "y" ]]; then
+      echo "-- Installing the silver searcher"
+      apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+      createDirectoryIfNecessary $HOME_DIR/git
+      pushd $HOME_DIR/git >/dev/null
+      git clone https://github.com/ggreer/the_silver_searcher
+      pushd the_silver_searcher
+
+      ./build.sh
+      sudo make install
+
+      popd >/dev/null
+      popd >/dev/null
+   fi
 fi
 
 echo "Thank you, come again!"
