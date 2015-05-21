@@ -124,6 +124,12 @@ if [ ! -f $vimproc_root/autoload/vimproc_linux64.so ]; then
 fi
 
 ################################################################################
+# Install exuberant ctags (required for tagbar)
+################################################################################
+hash ctags-exuberant 2>/dev/null  || { sudo aptitude install exuberant-ctags;  }
+
+
+################################################################################
 # Install vim-youcompleteme if possible
 # For more info: https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64-super-quick-installation
 ################################################################################

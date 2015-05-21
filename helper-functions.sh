@@ -111,6 +111,10 @@ function install_latest_cmake()
    local temp_dir=`mktemp -d`
 
    print_title "Installing $cmake_to_install"
+
+   # (cmake requires python-dev)
+   sudo aptitude install python-dev
+
    pushd $temp_dir >/dev/null
    trap 'popd >/dev/null' SIGINT
 
