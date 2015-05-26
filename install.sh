@@ -180,12 +180,12 @@ fi
 #https://github.com/monochromegane/the_platinum_searcher
 #https://github.com/ggreer/the_silver_searcher
 # platinum searcher requires golang!
-if ! hash ag; then
+if ! hash ag 2>/dev/null; then
    echo -n "Do you want to install the silver searcher? [y/N] "
    read answer
    if [[ "$answer" == "y" ]]; then
       echo "-- Installing the silver searcher"
-      apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+      sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
       createDirectoryIfNecessary $HOME_DIR/git
       pushd $HOME_DIR/git >/dev/null
       git clone https://github.com/ggreer/the_silver_searcher
