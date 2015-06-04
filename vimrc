@@ -298,7 +298,8 @@ nnoremap <C-h> :Unite history/yank<cr>
 nnoremap <C-g> :Unite grep:.<cr>
 nnoremap <C-f> :Unite -start-insert file_rec/async<cr>
 
-nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap <silent> <leader>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+vnoremap <C-g> <Esc>:Ag<cr><c-r>=GetVisual()<cr>
 if executable('ag')
    let g:unite_source_grep_command='ag'
    let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
