@@ -26,10 +26,11 @@ shift $((OPTIND-1))
 ################################################################################
 # Check installation of required tools
 ################################################################################
-hash wget 2>/dev/null  || { sudo aptitude install wget;  }
-hash curl 2>/dev/null  || { sudo aptitude install curl;  }
+hash wget  2>/dev/null || { sudo aptitude install wget;  }
+hash curl  2>/dev/null || { sudo aptitude install curl;  }
 hash unzip 2>/dev/null || { sudo aptitude install unzip; }
 hash cmake 2>/dev/null || { sudo aptitude install cmake; }
+hash g++   2>/dev/null || { sudo aptitude install g++;   }
 
 ################################################################################
 # Determine important directories
@@ -181,9 +182,9 @@ fi
 #https://github.com/ggreer/the_silver_searcher
 # platinum searcher requires golang!
 if ! hash ag 2>/dev/null; then
-   echo -n "Do you want to install the silver searcher? [y/N] "
+   echo -n "Do you want to install the silver searcher? [Y/n] "
    read answer
-   if [[ "$answer" == "y" ]]; then
+   if [[ "$answer" != "n" ]]; then
       echo "-- Installing the silver searcher"
       sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
       createDirectoryIfNecessary $HOME_DIR/git
