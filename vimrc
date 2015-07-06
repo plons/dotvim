@@ -92,6 +92,7 @@ set hlsearch
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 " nnoremap <CR> :noh<CR> ===> DO NOT USE THIS MAPPING: will cause problems with other uses of CR (e.g. in YcmDiags)
 nnoremap <silent> <C-l> :set nolist<CR>:nohl<CR><C-l>
+inoremap <C-l> <ESC>:set nolist<CR>:nohl<CR><C-l>
 
 " Shortcut to rapidly toggle `set list`
 " nmap <leader>l :set list!<CR> ===> DO NOT USE THIS MAPPING: will cause problems in combination with easymotion
