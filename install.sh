@@ -29,6 +29,7 @@ shift $((OPTIND-1))
 hash wget  2>/dev/null || { sudo aptitude install wget;  }
 hash curl  2>/dev/null || { sudo aptitude install curl;  }
 hash unzip 2>/dev/null || { sudo aptitude install unzip; }
+hash gzip  2>/dev/null || { sudo aptitude install gzip;  }
 hash cmake 2>/dev/null || { sudo aptitude install cmake; }
 hash g++   2>/dev/null || { sudo aptitude install g++;   }
 
@@ -80,6 +81,7 @@ updateOrInstall $update vim-ag                 https://github.com/rking/ag.vim.g
 #updateOrInstall $update vim-yankring           https://github.com/vim-scripts/YankRing.vim.git
 
 downloadAndInstallZip vim-fswitch http://www.vim.org/scripts/download_script.php?src_id=14047 
+downloadAnsiEsc
 
 
 ################################################################################

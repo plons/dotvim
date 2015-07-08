@@ -57,6 +57,18 @@ function downloadAndInstallZip()
    fi
 }
 
+function downloadAnsiEsc()
+{
+   if [ ! -f $VIM_ROOT/AnsiEsc.vba ]; then
+      echo "Downloading AnsiEsc.vba"
+      pushd $VIM_ROOT > /dev/null
+      wget --content-disposition http://www.vim.org/scripts/download_script.php?src_id=14498
+      if [ ! -f AnsiEsc.vba.gz ]; then echo "[ERROR] didn't find expected file AnsiEsc.vba.gz"; return 1; fi
+      gunzip AnsiEsc.vba.gz
+      popd > /dev/null
+   fi
+}
+
 function updateOrInstall()
 {
    if [ $# -lt 3 ]; then echo "updateOrInstall: expected 3 arguments, received $#!"; exit 1; fi
