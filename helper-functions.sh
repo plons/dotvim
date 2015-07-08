@@ -57,6 +57,12 @@ function downloadAndInstallZip()
    fi
 }
 
+# To install the vimball:
+#    $ vim ~/.vim/AnsiEsc.vba
+#    :!mkdir ~/.vim/bundle/vim-ansi-esc
+#    :UseVimball ~/.vim/bundle/vim-ansi-esc
+# To use it:
+#    :AnsiEsc
 function downloadAnsiEsc()
 {
    if [ ! -f $VIM_ROOT/AnsiEsc.vba ]; then
