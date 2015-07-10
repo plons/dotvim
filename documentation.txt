@@ -1,0 +1,138 @@
+gdb (http://pyclewn.sourceforge.net/_static/pyclewn.html)
+=========================================================
+http://pyclewn.sourceforge.net/install.html
+https://github.com/tpope/vim-pathogen
+    sudo pip install pyclewn
+    cd ~/.vim/bundle
+    python -c "import clewn; clewn.get_vimball()"
+    vim pyclewn-2.x.vmb
+    :!mkdir ~/.vim/bundle/vim-pyclewn
+    :UseVimball ~/.vim/bundle/vim-pyclewn
+
+:Pyclewn
+:Cfile path/to/executable
+:Cmapkeys
+    CTRL-B  set a breakpoint on the line where the cursor is located
+    CTRL-E  clear all breakpoints on the line where the cursor is located
+:Crun / :Cstart (stops at main)
+    CTRL-N  next: next source line, skipping all function calls
+    CTRL-Z  send an interrupt to gdb and the program it is running (unix only)
+    B       info breakpoints
+    L       info locals
+    A       info args
+    S       step
+    CTRL-N  next: next source line, skipping all function calls
+    F       finish
+    R       run
+    Q       quit
+    C       continue
+    W       where
+    X       foldvar
+:Cprint myVariable->someState()
+:Cexitclewn
+
+More info on possible commands:
+:C<CTRL-D>
+More info on parameters of for example the gdb show command:
+:Cshow <CTRL-D>
+
+movement
+========
+  k
+h   l
+  j
+
+w   -> goto begin of next word (word->characters separated by spaces or special characters (',', ';', ...))
+W   -> goto begin of next WORD (WORD->characters separated by spaces)
+e   -> go forward to end of word
+b   -> go backward to begin of word
+0   -> goto begin of line
+$   -> goto end of line
+^   -> goto first character of line
+gf  -> goto file (under cursor)
+gg  -> goto line default first line
+G   -> goto line default last line
+
+registers
+=========
+:help registers
+named registers e.g. "a
+system clipboard     "+
+
+normal mode
+===========
+x      -> Delete character
+dw     -> Delete word (special characters like ',' mark the end of a word)
+d3w    -> Delete 3 words
+dW     -> Delete WORD (characters separated by spaces)
+d$     -> Delete everything untill the end of the file
+dd     -> Delete line
+3dd    -> Delete 3 lines
+5"add  -> Delete 5 lines and put them in register a
+D      -> Delete the characters under the cursor until the end of the line
+
+r[char]-> repace current character with [char]
+yy     -> copy current line
+"ayy   -> copy current line to register a
+"Ayy   -> append current line to register a
+"+2yy  -> copy 2 lines to the system clipboard
+
+normal -> insert mode
+=====================
+i     -> insert text before cursor [count] times
+I     -> insert text before the first non blank in the line [count] times
+a     -> Append text after cursor [count] times
+A     -> Append text at the end of the line [count] times
+o     -> Begin a new line below the cursor and insert text, repeat [count] times
+O     -> Begin a new line above the cursor and insert text, repeat [count] times
+s     -> remove current character and go to insert mode
+S     -> remove current line and go to insert mode
+c[movement] -> change
+C     -> remove everything from the cursor to the end of the line and go to insert mode
+
+
+visual mode
+===========
+y -> yank (copy)
+d -> delete
+c -> (change) cut + leaves you in insert mode
+p -> replace the currently selected text with the content of the default register (0)
+
+ctrl+v  visual block mode
+shift+v visual lines selection
+vi)     visual select everything inside parentheses
+vi}     visual select everything inside brackets
+gv      go to previous visual selection
+
+indentation
+===========
+==   indent current line
+=    indent visual selection
+=i}  indent everything between the surrounding brackets
+     i} in this case is the 'motion'
+     for more information about motions :help text-objects
+
+command mode - buffers
+======================
+:ls  show buffer list
+:bn  next buffer
+:bp  previous buffer
+:bd  delete buffer
+:e   reload current file
+
+:set paste
+:set nopaste
+
+searching
+=========
+command mode  /searchterm  search
+              => ctrl-p    previous search
+              => ctrl-n    next search
+              => ctrl-f    switch to commandline window
+normal mode   *            search current word
+visual mode   *            visual-star-search plugin
+
+history
+=======
+q/    => search history in vim buffer (=> editable using regular vim!)
+:/    => command history in vim buffer
