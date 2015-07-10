@@ -3,16 +3,16 @@ dotvim
 
 personal vim configuration
 
-1. [Installation](#Installation)
-2. [Documentation](#Documentation)
+1. [Installation](# Installation)
+2. [Documentation](# Documentation)
+  1. [Movement](## Movement)
 
 
 # Installation
 * clone the repository to your home directory
 * run the *install.sh* script
- 
+
 # Documentation
-1. [Movement](#Movement)
 
 ## Movement
 |   |   |   |
