@@ -1,3 +1,17 @@
+compile c++ out of source builds
+================================
+:set makeprg=make\ -C\ ~/my/build/directory
+:make   execute the make command you just specified
+:cc     display current error
+:cn     display next error
+
+Use tag navigation
+==================
+# Execute following command in the root of your source directory
+:ctags -R
+<C>-]   Jump to the definition of the tag under your cursor
+<C>-T   Return one level
+
 gdb (http://pyclewn.sourceforge.net/_static/pyclewn.html)
 =========================================================
 http://pyclewn.sourceforge.net/install.html
