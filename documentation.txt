@@ -50,6 +50,14 @@ More info on possible commands:
 More info on parameters of for example the gdb show command:
 :Cshow <CTRL-D>
 
+GDB commands
+	info threads
+	thread apply all bt
+	print vector:
+		print *(myVector._M_impl._M_start)@myVector.size()
+		To print only the first N elements, do:
+		print *(myVector._M_impl._M_start)@N
+
 movement
 ========
   k

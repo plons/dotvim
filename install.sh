@@ -173,7 +173,7 @@ if [ ! -f $youcompleteme_root/third_party/ycmd/build.py ]; then
          install_latest_cmake
       fi
 
-      ./install.sh $install_parameters
+      ./install.py $install_parameters
    fi
 
    popd >/dev/null
