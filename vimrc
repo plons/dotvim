@@ -311,3 +311,12 @@ elseif executable('pt')
    let g:unite_source_grep_recursive_opt = ''
    let g:unite_source_grep_encoding = 'utf-8'
 endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" localvimrc
+" (for docs: see github.com/embear/vim-localvimrc)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Do not use sandbox, otherwise we cannot set makeprg
+let g:localvimrc_sandbox=0
+let g:localvimrc_persistent=1
+let g:localvimrc_whitelist='.*/darwynMaster/.*'
