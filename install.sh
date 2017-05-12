@@ -32,6 +32,8 @@ hash unzip 2>/dev/null || { sudo aptitude install unzip; }
 hash gzip  2>/dev/null || { sudo aptitude install gzip;  }
 hash cmake 2>/dev/null || { sudo aptitude install cmake; }
 hash g++   2>/dev/null || { sudo aptitude install g++;   }
+# Required for youcompleteme:
+sudo aptitude install python-dev
 
 ################################################################################
 # Determine important directories

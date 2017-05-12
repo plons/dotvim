@@ -98,9 +98,6 @@ inoremap <C-l> <ESC>:set nolist<CR>:nohl<CR><C-l>
 " nmap <leader>l :set list!<CR> ===> DO NOT USE THIS MAPPING: will cause problems in combination with easymotion
 " set list
 
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
-
 " wrapping
 set nowrap
 set formatoptions-=t " no auto-wrap, except for comments
@@ -214,6 +211,8 @@ map <C-c> <leader>c<space>
 " taglist: http://sourceforge.net/projects/vim-taglist
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <s-w> :TlistToggle<cr>
+" go to definition
+nnoremap <F3> <C-]>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 " easymotion
