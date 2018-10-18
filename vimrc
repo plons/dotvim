@@ -50,8 +50,8 @@ if ! has("gui_running")
    set t_Co=256
 endif
 "set background=dark
-set background=light
-colorscheme solarized
+"set background=light
+"colorscheme solarized
 
 
 """""""""""""""""""""""""""""""""""""""
