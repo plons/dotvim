@@ -78,6 +78,7 @@ updateOrInstall $update vim-colors-solarized   https://github.com/altercation/vi
 updateOrInstall $update vim-proc               https://github.com/Shougo/vimproc.vim.git
 updateOrInstall $update vim-ag                 https://github.com/rking/ag.vim.git
 updateOrInstall $update vim-localvimrc         https://github.com/embear/vim-localvimrc.git
+updateOrInstall $update vim-wiki               https://github.com/vimwiki/vimwiki.git
 #updateOrInstall $update vim-taglist            https://github.com/vim-scripts/taglist.vim.git
 #updateOrInstall $update vim-taglist            http://sourceforge.net/projects/vim-taglist/files/latest/download?source=files 
 #yankring uses <C-p> which collides with vim-ctrlp: needs to be fixed before we add yankring
