@@ -3,41 +3,41 @@ dotvim
 
 personal vim configuration
 
-1. [Installation](#installation)
-2. [Documentation](#documentation)
-  1. [Movement](#movement)
-  2. [Gdb](#gdb)
+- [Installation](#installation)
+- [Documentation](#documentation)
+    - [Movement](#movement)
+    - [Gdb](#gdb)
 
 
-<a name=installation>
-# Installation
+# <a name=installation>Installation
+
 * clone the repository to your home directory
 * run the *install.sh* script
 
-<a name=documentation>
-# Documentation
+# <a name=documentation>Documentation
 
-<a name=movement>
-## Movement
+## <a name=movement>Movement
+
 |   |   |   |
 |---|---|---|
 |   | k |   |
 | h |   | l |
 |   | j |   |
 
-* `w ` goto begin of next word (word->characters separated by spaces or special characters (',', ';', ...)) 
-* `W ` goto begin of next WORD (WORD->characters separated by spaces) 
-* `e ` go forward to end of word 
-* `b ` go backward to begin of word 
-* `0 ` goto begin of line 
-* `$ ` goto end of line 
-* `^ ` goto first character of line 
-* `gf` goto file (under cursor) 
-* `gg` goto line default first line 
+* `w ` goto begin of next word (word->characters separated by spaces or special characters (',', ';', ...))
+* `W ` goto begin of next WORD (WORD->characters separated by spaces)
+* `e ` go forward to end of word
+* `b ` go backward to begin of word
+* `0 ` goto begin of line
+* `$ ` goto end of line
+* `^ ` goto first character of line
+* `gf` goto file (under cursor)
+* `gg` goto line default first line
 * `G ` goto line default last line
 
-<a name=gdb>
-## GDB
+
+## <a name=gdb>GDB
+
 Using [Pyclewn](http://pyclewn.sourceforge.net/_static/pyclewn.html)
 * http://pyclewn.sourceforge.net/install.html
 * https://github.com/tpope/vim-pathogen
@@ -56,7 +56,7 @@ Load vimball
 :UseVimball ~/.vim/bundle/vim-pyclewn
 ```
 
-Debug session
+### Debug session
  * `:Pyclewn` Start pyclewn from Vim
  * `:Cfile path/to/executable`
  * `:Cmapkeys`
